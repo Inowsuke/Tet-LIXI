@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Năm Mới</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+       body {
+    background: url('pngtree-2025-year-of-snake-new-year-spring-festival-background-image_16233270.jpg') no-repeat center center fixed;
+    background-size: cover;
+    text-align: center;
+    padding: 50px;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.9); /* Giữ nguyên nền trắng mờ */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+h1 {
+    font-family: 'Pacifico', cursive; /* Font chữ mềm mại cho tiêu đề */
+    font-size: 45px;
+    color: #d0021b;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #8b0000; /* Đỏ đậm tạo điểm nhấn */
+    margin-bottom: 8px;
+}
+
+input, select {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    border: 2px solid #ff4500;
+    border-radius: 10px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus, select:focus {
+    border-color: #d0021b;
+    box-shadow: 0 0 8px rgba(208, 2, 27, 0.5);
+    outline: none;
+}
+
+.btn-success {
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #ff4b2b, #ff416c);
+    border: none;
+    padding: 12px 25px;
+    transition: all 0.3s ease-in-out;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background: linear-gradient(90deg, #ff416c, #ff4b2b);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Chúc Mừng Năm Mới!</h1>
+        <form id="infoForm">
+            <div class="mb-3">
+                <label for="name" class="form-label">🎉 Viết tên ra cho kao </label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="account" class="form-label">💰  Cho xin cái số tài khoản</label>
+                <input type="text" class="form-control" id="account" name="account" required>
+            </div>
+            <div class="mb-3">
+                <label for="bank" class="form-label">🏦 Ngân hàng gìi</label>
+                <input type="text" class="form-control" id="bank" name="bank" required>
+            </div>
+            <div class="mb-3">
+                <label for="wish" class="form-label">📝 Có gì mún nói dới KLong thì nói lun nè ❤️ </label>
+                <input type="text" class="form-control" id="wish" name="wish" required>
+            </div>
+            <button type="submit" class="btn btn-success">🧧 Xác Nhận 🧧</button>
+        </form>
+        <p class="footer-text">Nói chung là năm cũ đã qua, chúc ace một năm mới thành công, sau này giàu đừng quên KLong!!!❤️</p>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="./nhactet.mp3" type="audio/mpeg">
+    </audio>
+
+    
+    
+        <script>
+            document.getElementById('infoForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Lấy thông tin từ form
+    const name = document.getElementById('name').value;
+    const account = document.getElementById('account').value;
+    const bank = document.getElementById('bank').value;
+    const wish = document.getElementById('wish').value;
+    const time = new Date().toLocaleString(); // Lấy thời gian hiện tại
+
+    // Lưu thông tin vào localStorage để sử dụng trên trang quay số
+    localStorage.setItem('name', name);
+    localStorage.setItem('account', account);
+    localStorage.setItem('bank', bank);
+    localStorage.setItem('wish', wish);
+    localStorage.setItem('time', time);
+
+    // Gửi dữ liệu lên Google Sheets
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxqb5cXO7EDVbCLLZlWWOeVeGUHRwYr-Aa6-y9fllpgqo3npQoIVZoA_aGErQSuNd3i/exec";
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('account', account);
+    formData.append('bank', bank);
+    formData.append('wish', wish);
+    formData.append('time', time);
+
+    fetch(scriptURL, { method: 'POST', body: formData })
+        .then(response => response.text())
+       
+                window.location.href = "quayso.html"; // Chuyển hướng sang trang quay số
+         
+        
+            });
+           // Chờ sự kiện click để gửi tín hiệu phát nhạc đến iframe
+    document.addEventListener('click', function() {
+        let musicFrame = document.getElementById('music-frame');
+        if (musicFrame && musicFrame.contentWindow) {
+            musicFrame.contentWindow.postMessage('play', '*');
+            console.log("Gửi tín hiệu phát nhạc");
+        }
+    });
+
+    // Thêm sự kiện dừng nhạc
+    document.addEventListener("DOMContentLoaded", function() {
+        let audio = document.getElementById('bg-music');
+
+        // Đảm bảo âm thanh luôn bắt đầu từ đầu
+        audio.currentTime = 0;
+
+        // Kiểm tra nếu đã phát nhạc trước đó và tiếp tục phát khi tải lại trang
+        if (localStorage.getItem('isPlaying') === 'true') {
+            audio.play().then(() => {
+                console.log("Nhạc đã tự động phát lại từ trước.");
+            }).catch(() => {
+                console.log("Autoplay bị chặn, chờ thao tác từ người dùng.");
+
+                // Chờ người dùng click vào bất kỳ đâu trên trang để phát nhạc
+                document.addEventListener('click', function playAudioOnce() {
+                    audio.play();
+                    console.log("Nhạc bắt đầu phát sau khi người dùng tương tác.");
+                    document.removeEventListener('click', playAudioOnce);
+                });
+            });
+        } else {
+            // Nếu nhạc chưa từng phát, thử phát lần đầu
+            audio.play().then(() => {
+                console.log("Nhạc đã tự động phát.");
+                localStorage.setItem('isPlaying', 'true');
+            }).catch(() => {
+                console.log("Autoplay bị chặn, chờ thao tác từ người dùng.");
+                document.addEventListener('click', function playAudioOnce() {
+                    audio.play();
+                    localStorage.setItem('isPlaying', 'true');
+                    console.log("Nhạc bắt đầu phát sau khi người dùng tương tác.");
+                    document.removeEventListener('click', playAudioOnce);
+                });
+            });
+        }
+    });
+
+    // Xóa trạng thái khi nhạc dừng để kiểm soát lại khi tải trang
+    document.getElementById('bg-music').onpause = function() {
+        localStorage.removeItem('isPlaying');
+    };
+
+    // Đảm bảo trạng thái nhạc vẫn tiếp tục khi người dùng rời khỏi trang và quay lại
+    window.addEventListener('beforeunload', () => {
+        localStorage.setItem('isPlaying', 'true');
+    });
+
+     </script>
+</body>
+</html>
