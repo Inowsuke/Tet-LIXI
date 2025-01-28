@@ -133,7 +133,7 @@
 
                 // Hiển thị kết quả
                 resultBox.innerHTML = `
-                    <p>🎉 Chúc mừng! Bạn sẽ nhận được: <span id="luckyNumber" class="fw-bold text-danger">${luckyNumber * 1000}</span> VNĐ tiền lì xì 🎉</p>
+                    <p>🎉 Chúc mừng! M sẽ được KLong quăng: <span id="luckyNumber" class="fw-bold text-danger">${luckyNumber * 1000}</span> VNĐ dô mặt 🎉</p>
                     <button class="btn btn-success" onclick="submitLuckyNumber()">💰 Nhận Lì Xì</button>
                 `;
             }, 3000);
@@ -159,7 +159,7 @@
         .then(response => response.text())
         .then(result => {
             if (result.trim() === "SUCCESS") {
-                alert("Lì xì của bạn đã được cập nhật!");
+                alert("Lì xì của bạn đã được cập nhật, đợi KLong ném tiền qua cho");
                 localStorage.clear();
                 window.location.href = "index.html";  // Quay lại trang chủ sau khi hoàn tất
             } else if (result.trim() === "NOT FOUND") {
